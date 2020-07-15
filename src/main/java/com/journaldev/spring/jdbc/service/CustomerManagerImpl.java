@@ -1,5 +1,6 @@
 package com.journaldev.spring.jdbc.service;
 
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.journaldev.spring.jdbc.dao.CustomerDAO;
@@ -13,7 +14,7 @@ public class CustomerManagerImpl implements CustomerManager {
 		this.customerDAO = customerDAO;
 	}
 
-	@Transactional
+	@Transactional(isolation = Isolation.READ_COMMITTED,readOnly = true, rollbackFor = Exception.class)
 	public void createCustomer(Customer cust) {
 		customerDAO.create(cust);
 	}

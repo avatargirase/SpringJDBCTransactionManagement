@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
@@ -18,23 +19,42 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
-	<!-- MySQL DB DataSource -->	
+
+	<!-- MySQL DB DataSource -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/exuberant?serverTimezone=PST" />
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/exuberant?serverTimezone=PST&amp;useSSL=false" />
 		<property name="username" value="root" />
 		<property name="password" value="Password123" />
 	</bean>
 
-	<bean id="customerDAO" class="com.journaldev.spring.jdbc.dao.CustomerDAOImpl">
+	<bean id="customerDAO"
+		class="com.journaldev.spring.jdbc.dao.CustomerDAOImpl">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 
-	<bean id="customerManager" class="com.journaldev.spring.jdbc.service.CustomerManagerImpl">
+	<bean id="employeeDAO"
+		class="com.journaldev.spring.jdbc.dao.EmployeeDAOImpl">
+		<property name="datasource" ref="dataSource"></property>
+		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+	</bean>
+
+	<bean id="customerManager"
+		class="com.journaldev.spring.jdbc.service.CustomerManagerImpl">
 		<property name="customerDAO" ref="customerDAO"></property>
 	</bean>
+	
+	<bean id="employeeManager"
+		class="com.journaldev.spring.jdbc.service.EmployeeManagerImpl">
+		<property name="employeeDAO" ref="employeeDAO"></property>
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+</bean>
 
 </beans>

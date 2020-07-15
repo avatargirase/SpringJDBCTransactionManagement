@@ -37,6 +37,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		jdbcTemplate.update(queryAddress, new Object[] { customer.getId(),
 				customer.getAddress().getAddress(),
 				customer.getAddress().getCountry() });
+		
 		System.out.println("Inserted into Address Table Successfully");
 	}
 

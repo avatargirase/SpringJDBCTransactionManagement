@@ -31,6 +31,7 @@ public class TransactionManagerMain {
 		Address address = new Address();
 		address.setId(2);
 		address.setCountry("USA");
+		
 		// setting value more than 20 chars, so that SQLException occurs
 		address.setAddress("Dean Martin Drive, NV 89129");
 		customer.setAddress(address);
